@@ -1,0 +1,6 @@
+query ListSuppliers {
+  ListSuppliers {
+    id
+    name
+  }
+}

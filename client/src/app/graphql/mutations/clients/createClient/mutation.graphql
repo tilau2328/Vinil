@@ -1,0 +1,6 @@
+mutation createClient($name: String) {
+  CreateClient(name: $name) {
+    id
+    name
+  }
+}

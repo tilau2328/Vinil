@@ -1,0 +1,6 @@
+query ListClients {
+  ListClients {
+    id
+    name
+  }
+}

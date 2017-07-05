@@ -1,0 +1,14 @@
+mutation createMaterial($name: String, $price: Int, $metric: String, $supplier: ID, $available: Int, $description: String) {
+  CreateMaterial(name: $name, price: $price, metric: $metric, supplier: $supplier, available: $available, description: $description) {
+    id
+    name
+    price
+    metric
+    supplier {
+      id
+      name
+    }
+    available
+    description
+  }
+}

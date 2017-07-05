@@ -1,0 +1,10 @@
+query GetClient($id: ID!) {
+  GetClient(id: $id){
+    id
+    name
+    projects {
+      id
+      name
+    }
+  }
+}

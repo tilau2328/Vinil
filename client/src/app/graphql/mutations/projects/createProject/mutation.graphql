@@ -1,0 +1,12 @@
+mutation createProject($name: String, $cost: Int, $client: ID, $description: String) {
+  CreateProject(name: $name, cost: $cost, client: $client, description: $description) {
+    id
+    name
+    cost
+    client {
+      id
+      name
+    }
+    description
+  }
+}

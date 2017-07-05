@@ -1,0 +1,10 @@
+subscription ClientUpdate($id: String!){
+  ClientUpdate(id: $id){
+    id
+    name
+    projects {
+      id
+      name
+    }
+  }
+}

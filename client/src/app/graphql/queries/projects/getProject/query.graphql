@@ -1,0 +1,19 @@
+query GetProject($id: ID!) {
+  GetProject(id: $id){
+    id
+    name
+    cost
+    client {
+      id
+      name
+    }
+    description
+    materials {
+      material {
+        id
+        name
+      }
+      quantity
+    }
+  }
+}

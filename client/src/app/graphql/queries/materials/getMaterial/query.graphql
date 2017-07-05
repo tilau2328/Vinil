@@ -1,0 +1,14 @@
+query GetMaterial($id: ID!) {
+  GetMaterial(id: $id){
+    id
+    name
+    price
+    supplier {
+      id
+      name
+    }
+    description
+    available
+    metric
+  }
+}

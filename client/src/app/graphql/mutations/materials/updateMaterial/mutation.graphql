@@ -1,0 +1,14 @@
+mutation updateMaterial($id: ID!, $name: String, $price: Int, $metric: String, $supplier: ID, $available: Int, $description: String) {
+  UpdateMaterial(id: $id, name: $name, price: $price, metric: $metric, supplier: $supplier, available: $available, description: $description) {
+    id
+    name
+    price
+    metric
+    supplier {
+      id
+      name
+    }
+    available
+    description
+  }
+}

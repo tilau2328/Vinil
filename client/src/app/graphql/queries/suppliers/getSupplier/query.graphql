@@ -1,0 +1,6 @@
+query GetSupplier($id: ID!) {
+  GetSupplier(id: $id){
+    id
+    name
+  }
+}

@@ -1,0 +1,3 @@
+mutation deleteMaterial($id: ID!) {
+  DeleteMaterial(id: $id)
+}

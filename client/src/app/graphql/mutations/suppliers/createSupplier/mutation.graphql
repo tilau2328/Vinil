@@ -1,0 +1,6 @@
+mutation createSupplier($name: String) {
+  CreateSupplier(name: $name) {
+    id
+    name
+  }
+}

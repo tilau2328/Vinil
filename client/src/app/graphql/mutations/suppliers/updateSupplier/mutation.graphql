@@ -1,0 +1,6 @@
+mutation updateSupplier($id: ID!, $name: String) {
+  UpdateSupplier(id: $id, name: $name) {
+    id
+    name
+  }
+}
