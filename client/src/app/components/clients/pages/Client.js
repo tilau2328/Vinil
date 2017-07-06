@@ -5,12 +5,12 @@ import ProjectList from '../../projects/lists/ProjectList';
 import DeleteClientButton from '../buttons/DeleteClientButton';
 import UpdateClientButton from '../buttons/UpdateClientButton';
 
-const Client = ({ client, loading }) => {
+const Client = ({ client, loading, subscribeToClientUpdate }) => {
   if (loading) return <h2>Loading</h2>;
   const {
     name, id, projects
   } = client;
-  console.log(client);
+  if(id) subscribeToClientUpdate(id);
   return (
     <div>
       <h1>Client: { name || id }</h1>

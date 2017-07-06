@@ -16,6 +16,7 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-2": "^6.22.0",
     "css-loader": "^0.28.4",
+    "graphql-subscriptions": "^0.4.4",
     "graphql-tag": "^2.0.0",
     "react": "^15.6.1",
     "react-apollo": "^1.2.0",

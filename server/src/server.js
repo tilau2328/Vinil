@@ -7,7 +7,17 @@ const server = new hapi.Server();
 
 const getServer = function(){
   server.connection({ host: 'localhost', port: 8000 });
-  new SubscriptionServer({ schema, execute, subscribe }, { server: server.listener, path: '/subscriptions' });
+  new SubscriptionServer({
+    schema,
+    execute,
+    subscribe,
+    onOperation: (message, params, webSocket) => {
+      return params;
+    }
+  }, {
+    server: server.listener,
+    path: '/subscriptions'
+  });
   return new Promise((resolve, reject) => {
     server.register(app.plugins, (err) => {
       if (err) reject(err);

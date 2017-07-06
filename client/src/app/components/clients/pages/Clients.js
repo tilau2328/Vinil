@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import withData from '../../../graphql/queries/clients/listClients';
 import ClientList from '../lists/ClientList';
 
-const Clients = ({ clients, loading }) => {
+const Clients = ({ clients, loading, subscribeToClientAdd, subscribeToClientRemove }) => {
   if (loading) return <h2>Loading</h2>;
+  subscribeToClientRemove();
+  subscribeToClientAdd();
   return (
     <div>
       <h1>Clients</h1>

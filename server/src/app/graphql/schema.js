@@ -2,10 +2,10 @@ const { GraphQLSchema } = require('graphql');
 
 const query = require('./queries');
 const mutation = require('./mutations');
-const subscriptions = require('./subscriptions');
+const subscription = require('./subscriptions');
 
 module.exports = new GraphQLSchema({
-  //subscriptions,
+  subscription,
   mutation,
   query
 });

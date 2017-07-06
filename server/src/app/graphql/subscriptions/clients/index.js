@@ -2,26 +2,37 @@ const {
   GraphQLNonNull,
   GraphQLID
 } = require('graphql');
-const resolvers = require('./resolvers');
-const { ClientType } = require('../../types');
+const { withFilter } = require('graphql-subscriptions');
+const pubsub = require('../../pubsub');
 
 const ClientUpdate = {
   name: 'ClientUpdate',
-  type: ClientType,
+  type: GraphQLID,
   args: {
     id:  { type: new GraphQLNonNull(GraphQLID) }
   },
-  resolve: resolvers.get,
-  subscribe: () => pubsub.asyncIterator('ClientUpdated')
+  subscribe: withFilter(
+    () => pubsub.asyncIterator('ClientUpdate'),
+    (payload, variables) => {
+      return payload === variables.id;
+    }
+  )
 };
 
 const NewClient = {
   name: 'NewClient',
   type: GraphQLID,
-  subscribe: () => pubsub.asyncIterator('ClientAdded')
+  subscribe: () => pubsub.asyncIterator('NewClient')
+};
+
+const ClientDelete = {
+  name: 'ClientDelete',
+  type: GraphQLID,
+  subscribe: () => pubsub.asyncIterator('ClientDelete')
 };
 
 module.exports = {
   ClientUpdate,
+  ClientDelete,
   NewClient
 }

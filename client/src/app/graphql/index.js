@@ -2,8 +2,8 @@ import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-trans
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { applyMiddleware, applyAfterware } from 'redux';
 
-//const wsClient = new SubscriptionClient('ws://192.168.99.100:8000/subscriptions', { reconnect: true });
 const wsClient = new SubscriptionClient('ws://localhost:8000/subscriptions', { reconnect: true });
+//const wsClient = new SubscriptionClient('ws://192.168.99.100:8000/subscriptions', { reconnect: true });
 
 const networkInterface = createNetworkInterface({
   uri: 'http://localhost:8000/graphql',
