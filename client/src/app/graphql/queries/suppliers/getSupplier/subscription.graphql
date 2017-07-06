@@ -1,0 +1,3 @@
+subscription SupplierUpdate($id: ID!){
+  SupplierUpdate(id: $id)
+}

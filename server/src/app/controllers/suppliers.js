@@ -80,5 +80,7 @@ module.exports = {
   list,
   get,
   update,
-  remove
+  remove,
+  addMaterial,
+  removeMaterial
 }

@@ -1,11 +1,13 @@
 const projectControllers = require('../../../controllers/projects');
 const clientControllers = require('../../../controllers/clients');
+const pubsub = require('../../pubsub');
 
 const create = function(source, { name, cost, client, description, materials }){
   return new Promise((resolve, reject) => {
     projectControllers.create(name, cost, client, description, materials)
     .then((project) => {
       if(client) clientControllers.addProject(client, project.id);
+      pubsub.publish('NewProject', project.id);
       resolve(project);
     })
     .catch((error) => reject(error));
@@ -24,7 +26,10 @@ const update = function(source, { id, name, cost, client, description, materials
       }
       return projectControllers.update(project, { name, cost, client, description, materials });
     })
-    .then((project) => resolve(project))
+    .then((project) => {
+      pubsub.publish('ProjectUpdate', project.id);
+      resolve(project);
+    })
     .catch((error) => reject(error));
   });
 }
@@ -37,7 +42,10 @@ const remove = function(source, { id }){
       if(project.client) clientControllers.removeProject(project.client, id);
       return projectControllers.remove(id)
     })
-    .then(() => resolve(id))
+    .then((project_id) => {
+      pubsub.publish('ProjectDelete', project_id);
+      resolve(project_id);
+    })
     .catch((error) => reject(error));
   });
 }

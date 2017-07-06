@@ -1,0 +1,3 @@
+subscription MaterialUpdate($id: ID!){
+  MaterialUpdate(id: $id)
+}

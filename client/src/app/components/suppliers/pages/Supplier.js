@@ -5,9 +5,12 @@ import MaterialList from '../../materials/lists/MaterialList';
 import DeleteSupplierButton from '../buttons/DeleteSupplierButton';
 import UpdateSupplierButton from '../buttons/UpdateSupplierButton';
 
-const Supplier = ({ supplier, loading }) => {
+const Supplier = ({ supplier, loading, subscribeToSupplierUpdate }) => {
   if (loading) return <h2>Loading</h2>;
   const { materials, name, id } = supplier;
+  if(!id) { return <h1>Supplier Not Found</h1> }
+  subscribeToSupplierUpdate(id);
+
   return (
     <div>
       <h1>Supplier: { name || id }</h1>

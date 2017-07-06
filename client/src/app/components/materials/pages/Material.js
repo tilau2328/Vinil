@@ -6,7 +6,7 @@ import SupplierItem from '../../suppliers/items/SupplierItem';
 import DeleteMaterialButton from '../buttons/DeleteMaterialButton';
 import UpdateMaterialButton from '../buttons/UpdateMaterialButton';
 
-const Material = ({ material, loading }) => {
+const Material = ({ material, loading, subscribeToMaterialUpdate }) => {
   if (loading) return <h2>Loading</h2>;
   const {
     id,
@@ -17,6 +17,8 @@ const Material = ({ material, loading }) => {
     available,
     description
   } = material;
+  if(!id) { return <h1>^Material Not Found</h1> }
+  subscribeToMaterialUpdate(id);
 
   const priceField = () => {
     if(price){

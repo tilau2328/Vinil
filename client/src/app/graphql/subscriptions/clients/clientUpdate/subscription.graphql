@@ -1,3 +1,0 @@
-subscription ClientUpdate($id: String!){
-  ClientUpdate(id: $id) 
-}

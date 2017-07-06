@@ -6,7 +6,7 @@ import ClientSelect from '../../clients/selects/ClientSelect';
 class EditProjectForm extends Component {
   constructor(props){
     super(props);
-    const { name, cost, client, description } = this.props.project;
+    const { id, name, cost, client, description } = this.props.project;
 
     this.state = {
       complete: false,
@@ -14,7 +14,8 @@ class EditProjectForm extends Component {
       cost: cost || 0,
       client: client || null,
       description: description || '',
-      error: ''
+      error: '',
+      id
     };
   }
 
@@ -68,7 +69,10 @@ class EditProjectForm extends Component {
       <div className="row">
         <div className="col-12">
           <label htmlFor="clientInput">Client</label>
-          <ClientSelect onChange={this.onClientChange.bind(this)} id={this.props.project.client.id}/>
+          <ClientSelect
+            onChange={this.onClientChange.bind(this)}
+            id={this.props.project.client ? this.props.project.client.id : null}
+          />
         </div>
       </div>
     );

@@ -1,0 +1,3 @@
+subscription ProjectUpdate($id: ID!){
+  ProjectUpdate(id: $id)
+}

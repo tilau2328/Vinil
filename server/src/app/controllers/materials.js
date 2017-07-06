@@ -10,8 +10,9 @@ const create = function(name, price, supplier, description, available, metric){
 }
 
 const list = function({ supplier }){
+  var filter = supplier ? { supplier } : null;
   return new Promise((resolve, reject) => {
-    Material.find({ supplier }).exec()
+    Material.find(filter).exec()
     .then((materials) => resolve(materials))
     .catch((error) => reject(error));
   });

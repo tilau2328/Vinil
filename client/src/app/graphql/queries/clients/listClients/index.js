@@ -17,7 +17,6 @@ const ListClients = graphql(QUERY, {
             document: ADD_SUBSCRIPTION,
             updateQuery: (prev, { data }) => {
               refetch();
-              console.log(data);
               return prev;
             }
         });

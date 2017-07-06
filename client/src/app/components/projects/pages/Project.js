@@ -4,9 +4,10 @@ import withData from '../../../graphql/queries/projects/getProject';
 import withMutation from '../../../graphql/mutations/projects/deleteProject';
 import ProjectMaterialList from '../../materials/lists/ProjectMaterialList';
 import DeleteProjectButton from '../buttons/DeleteProjectButton';
+import UpdateProjectButton from '../buttons/UpdateProjectButton';
 import ClientItem from '../../clients/items/ClientItem';
 
-const Project = ({ project, loading }) => {
+const Project = ({ project, loading, subscribeToProjectUpdate }) => {
   if (loading) return <h2>Loading</h2>;
   const {
     id, name, cost,
@@ -14,11 +15,10 @@ const Project = ({ project, loading }) => {
     materials
   } = project;
   if(!id) { return <h1>Project Not Found</h1> }
-
+  subscribeToProjectUpdate(id);
   return (
     <div>
       <h1>Project: { name || id }</h1>
-      <Link to={`/projects/${id}/edit`} className="btn btn-link">Edit</Link>
       <p>Cost { cost }€</p>
       { client ? <label>Client: </label> : null }
       { client ? <ClientItem client={client} /> : null }
@@ -27,6 +27,7 @@ const Project = ({ project, loading }) => {
       { materials && materials.length ? <label>Materials: </label> : null }
       { materials && materials.length ? <ProjectMaterialList materials={materials}/> : null }
       <DeleteProjectButton id={id} />
+      <UpdateProjectButton id={id} />
     </div>
   );
 };

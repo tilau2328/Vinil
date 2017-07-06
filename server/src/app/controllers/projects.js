@@ -10,8 +10,9 @@ const create = function(name, cost, client, description, materials){
 }
 
 const list = function({ client }){
+  var filter = client ? { client } : null;
   return new Promise((resolve, reject) => {
-    Project.find({ client }).exec()
+    Project.find(filter).exec()
     .then((projects) => resolve(projects))
     .catch((error) => reject(error));
   });

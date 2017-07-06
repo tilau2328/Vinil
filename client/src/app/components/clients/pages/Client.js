@@ -10,7 +10,8 @@ const Client = ({ client, loading, subscribeToClientUpdate }) => {
   const {
     name, id, projects
   } = client;
-  if(id) subscribeToClientUpdate(id);
+  if(!id) { return <h1>Client Not Found</h1> }
+  subscribeToClientUpdate(id);
   return (
     <div>
       <h1>Client: { name || id }</h1>
