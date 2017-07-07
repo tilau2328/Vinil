@@ -125,11 +125,12 @@ class EditMaterialForm extends Component {
   }
 
   supplierSelect(){
+    const id = this.props.material.supplier ? this.props.material.supplier.id : null;
     return (
       <div className="row">
         <div className="col-12">
           <label htmlFor="supplierInput">Supplier</label>
-          <SupplierSelect onChange={this.onSupplierChange.bind(this)} id={this.props.material.supplier.id} />
+          <SupplierSelect onChange={this.onSupplierChange.bind(this)} id={id} />
         </div>
       </div>
     );
@@ -143,6 +144,7 @@ class EditMaterialForm extends Component {
       variables: {
         id,
         name,
+        price,
         available,
         metric,
         supplier,

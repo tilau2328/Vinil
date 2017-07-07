@@ -2,5 +2,10 @@ query GetSupplier($id: ID!) {
   GetSupplier(id: $id){
     id
     name
+    materials {
+      id
+      name
+      price
+    }
   }
 }

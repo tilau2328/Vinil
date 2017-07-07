@@ -6,7 +6,10 @@ const create = function(source, { name, price, supplier, description, available,
   return new Promise((resolve, reject) => {
     materialsControllers.create(name, price, supplier, description, available, metric)
     .then((material) => {
-      if(supplier) supplierControllers.addMaterial(supplier, material.id);
+      if(supplier) {
+        supplierControllers.addMaterial(supplier, material.id);
+        pubsub.publish('SupplierUpdate', supplier);
+      }
       pubsub.publish('NewMaterial', material.id);
       resolve(material);
     })
@@ -20,8 +23,14 @@ const update = function(source, { id, name, price, supplier, description, availa
     .then((material) => {
       if(!material) throw 'Error: Material not found.';
       if(supplier != material.supplier.toString()){
-        if(supplier) supplierControllers.addMaterial(supplier, id);
-        if(material.supplier) supplierControllers.removeMaterial(material.supplier, id);
+        if(supplier) {
+          supplierControllers.addMaterial(supplier, id);
+          pubsub.publish('SupplierUpdate', supplier);
+        }
+        if(material.supplier) {
+          supplierControllers.removeMaterial(material.supplier, id);
+          pubsub.publish('SupplierUpdate', material.supplier);
+        }
       }
       return materialsControllers.update(material, { name, price, supplier, description, available, metric })
     })
@@ -38,7 +47,10 @@ const remove = function(source, { id }){
     materialsControllers.get(id)
     .then((material) => {
       if(!material) throw 'Error: Material not found.';
-      if(material.supplier) supplierControllers.removeMaterial(material.supplier, id);
+      if(material.supplier) {
+        supplierControllers.removeMaterial(material.supplier, id);
+        pubsub.publish('SupplierUpdate', material.supplier);
+      }
       return materialsControllers.remove(id);
     })
     .then((material_id) => {

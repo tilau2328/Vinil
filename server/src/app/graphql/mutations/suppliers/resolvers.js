@@ -1,9 +1,10 @@
-const controllers = require('../../../controllers/suppliers');
+const supplierControllers = require('../../../controllers/suppliers');
+const materialControllers = require('../../../controllers/materials');
 const pubsub = require('../../pubsub');
 
 const create = function(source, { name }){
   return new Promise((resolve, reject) => {
-    controllers.create(name)
+    supplierControllers.create(name)
     .then((supplier) => {
       pubsub.publish("NewSupplier", supplier.id);
       resolve(supplier);
@@ -14,10 +15,10 @@ const create = function(source, { name }){
 
 const update = function(source, { id, name }){
   return new Promise((resolve, reject) => {
-    controllers.get(id)
+    supplierControllers.get(id)
     .then((supplier) => {
       if(!supplier) throw 'Error: Supplier not found.';
-      return controllers.update(supplier, { name });
+      return supplierControllers.update(supplier, { name });
     })
     .then((supplier) => {
       pubsub.publish("SupplierUpdate", supplier.id);
@@ -29,8 +30,17 @@ const update = function(source, { id, name }){
 
 const remove = function(source, { id }){
   return new Promise((resolve, reject) => {
-    controllers.remove(id)
+    supplierControllers.remove(id)
     .then((supplier_id) => {
+      materialControllers.list({ supplier: supplier_id })
+      .then((materials) => {
+        if(!materials || !materials.length) return;
+        materials.map((material) => {
+          materialControllers.remove(material.id)
+          .then((material_id) => pubsub.publish('MaterialDelete', material_id))
+          .catch((error) => console.log(error))
+        });
+      })
       pubsub.publish("SupplierDelete", supplier_id);
       resolve(supplier_id);
     })

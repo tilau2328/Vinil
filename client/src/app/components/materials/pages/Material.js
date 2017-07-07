@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import withData from '../../../graphql/queries/materials/getMaterial';
 import withMutation from '../../../graphql/mutations/materials/deleteMaterial';
 import SupplierItem from '../../suppliers/items/SupplierItem';
 import DeleteMaterialButton from '../buttons/DeleteMaterialButton';
 import UpdateMaterialButton from '../buttons/UpdateMaterialButton';
 
-const Material = ({ material, loading, subscribeToMaterialUpdate }) => {
+const Material = ({ material, loading, subscribeToMaterialUpdate, subscribeToMaterialDelete }) => {
   if (loading) return <h2>Loading</h2>;
   const {
     id,
@@ -17,8 +18,9 @@ const Material = ({ material, loading, subscribeToMaterialUpdate }) => {
     available,
     description
   } = material;
-  if(!id) { return <h1>^Material Not Found</h1> }
+  if(!id) { return <Redirect to='/materials' />; }
   subscribeToMaterialUpdate(id);
+  subscribeToMaterialDelete(id);
 
   const priceField = () => {
     if(price){

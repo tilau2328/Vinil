@@ -1,17 +1,19 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import withData from '../../../graphql/queries/clients/getClient';
 import ProjectList from '../../projects/lists/ProjectList';
 import DeleteClientButton from '../buttons/DeleteClientButton';
 import UpdateClientButton from '../buttons/UpdateClientButton';
 
-const Client = ({ client, loading, subscribeToClientUpdate }) => {
+const Client = ({ client, loading, subscribeToClientUpdate, subscribeToClientDelete }) => {
   if (loading) return <h2>Loading</h2>;
   const {
     name, id, projects
   } = client;
-  if(!id) { return <h1>Client Not Found</h1> }
+  if(!id) { return <Redirect to='/clients' />; }
   subscribeToClientUpdate(id);
+  subscribeToClientDelete(id);
   return (
     <div>
       <h1>Client: { name || id }</h1>

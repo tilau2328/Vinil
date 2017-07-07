@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import withData from '../../../graphql/queries/projects/getProject';
 import withMutation from '../../../graphql/mutations/projects/deleteProject';
 import ProjectMaterialList from '../../materials/lists/ProjectMaterialList';
@@ -7,15 +8,16 @@ import DeleteProjectButton from '../buttons/DeleteProjectButton';
 import UpdateProjectButton from '../buttons/UpdateProjectButton';
 import ClientItem from '../../clients/items/ClientItem';
 
-const Project = ({ project, loading, subscribeToProjectUpdate }) => {
+const Project = ({ project, loading, subscribeToProjectUpdate, subscribeToProjectDelete }) => {
   if (loading) return <h2>Loading</h2>;
   const {
     id, name, cost,
     client, description,
     materials
   } = project;
-  if(!id) { return <h1>Project Not Found</h1> }
+  if(!id) { return <Redirect to='/projects' />; }
   subscribeToProjectUpdate(id);
+  subscribeToProjectDelete(id);
   return (
     <div>
       <h1>Project: { name || id }</h1>
