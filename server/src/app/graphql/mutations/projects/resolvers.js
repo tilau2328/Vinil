@@ -8,7 +8,7 @@ const create = function(source, { name, cost, client, description, materials }){
     .then((project) => {
       if(client) {
         clientControllers.addProject(client, project.id)
-        .then((client) => pubsub.publish('ClientUpdate', client))
+        .then((client) => pubsub.publish('ClientUpdate', client.id))
         .catch((error) => console.log(error));
       }
       pubsub.publish('NewProject', project.id);
@@ -39,7 +39,7 @@ const update = function(source, { id, name, cost, client, description, materials
       return projectControllers.update(project, { name, cost, client, description, materials });
     })
     .then((project) => {
-      pubsub.publish('ProjectUpdate', { id: project.id, client: project.client });
+      pubsub.publish('ProjectUpdate', { id: project.id, client: project.client ? project.client.toString() : '' });
       resolve(project);
     })
     .catch((error) => reject(error));

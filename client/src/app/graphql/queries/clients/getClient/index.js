@@ -41,7 +41,7 @@ const GetClient = graphql(QUERY, {
       subscribeToProjectUpdate: (params) => {
         return subscribeToMore({
             document: UPDATE_PROJECT_SUBSCRIPTION,
-            variables: { id: params },
+            variables: { client: params },
             updateQuery: (prev, { data }) => {
               refetch();
               return prev;

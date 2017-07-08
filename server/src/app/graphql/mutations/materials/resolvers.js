@@ -8,7 +8,7 @@ const create = function(source, { name, price, supplier, description, available,
     .then((material) => {
       if(supplier) {
         supplierControllers.addMaterial(supplier, material.id)
-        .then((supplier) => pubsub.publish('SupplierUpdate', supplier))
+        .then((supplier) => pubsub.publish('SupplierUpdate', supplier.id))
         .catch((error) => console.log(error));
       }
       pubsub.publish('NewMaterial', material.id);
@@ -38,7 +38,7 @@ const update = function(source, { id, name, price, supplier, description, availa
       return materialsControllers.update(material, { name, price, supplier, description, available, metric })
     })
     .then((material) => {
-      pubsub.publish('MaterialUpdate', { id: material.id, supplier: material.supplier.toString() });
+      pubsub.publish('MaterialUpdate', { id: material.id, supplier: material.supplier ? material.supplier.toString() : '' });
       resolve(material);
     })
     .catch((error) => reject(error));
