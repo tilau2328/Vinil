@@ -7,8 +7,9 @@ const create = function(source, { name, price, supplier, description, available,
     materialsControllers.create(name, price, supplier, description, available, metric)
     .then((material) => {
       if(supplier) {
-        supplierControllers.addMaterial(supplier, material.id);
-        pubsub.publish('SupplierUpdate', supplier);
+        supplierControllers.addMaterial(supplier, material.id)
+        .then((supplier) => pubsub.publish('SupplierUpdate', supplier))
+        .catch((error) => console.log(error));
       }
       pubsub.publish('NewMaterial', material.id);
       resolve(material);
@@ -24,18 +25,20 @@ const update = function(source, { id, name, price, supplier, description, availa
       if(!material) throw 'Error: Material not found.';
       if(supplier != material.supplier.toString()){
         if(supplier) {
-          supplierControllers.addMaterial(supplier, id);
-          pubsub.publish('SupplierUpdate', supplier);
+          supplierControllers.addMaterial(supplier, id)
+          .then((supplier) => pubsub.publish('SupplierUpdate', supplier.id))
+          .catch((error) => console.log(error));
         }
         if(material.supplier) {
-          supplierControllers.removeMaterial(material.supplier, id);
-          pubsub.publish('SupplierUpdate', material.supplier);
+          supplierControllers.removeMaterial(material.supplier, id)
+          .then((supplier) => pubsub.publish('SupplierUpdate', supplier.id))
+          .catch((error) => console.log(error));
         }
       }
       return materialsControllers.update(material, { name, price, supplier, description, available, metric })
     })
     .then((material) => {
-      pubsub.publish('MaterialUpdate', material.id);
+      pubsub.publish('MaterialUpdate', { id: material.id, supplier: material.supplier.toString() });
       resolve(material);
     })
     .catch((error) => reject(error));
@@ -48,8 +51,9 @@ const remove = function(source, { id }){
     .then((material) => {
       if(!material) throw 'Error: Material not found.';
       if(material.supplier) {
-        supplierControllers.removeMaterial(material.supplier, id);
-        pubsub.publish('SupplierUpdate', material.supplier);
+        supplierControllers.removeMaterial(material.supplier, id)
+        .then((supplier) => pubsub.publish('SupplierUpdate', supplier.id))
+        .catch((error) => console.log(error));
       }
       return materialsControllers.remove(id);
     })

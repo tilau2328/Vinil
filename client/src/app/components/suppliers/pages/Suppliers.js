@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import withData from '../../../graphql/queries/suppliers/listSuppliers';
 import SupplierList from '../lists/SupplierList';
 
-const Suppliers = ({ suppliers, loading, subscribeToSupplierAdd, subscribeToSupplierRemove }) => {
+const Suppliers = ({ suppliers, loading, subscribeToSupplierAdd, subscribeToSupplierUpdate, subscribeToSupplierRemove }) => {
   if (loading) return <h2>Loading</h2>;
   subscribeToSupplierRemove();
+  subscribeToSupplierUpdate();
   subscribeToSupplierAdd();
-  
+
   return (
     <div>
       <h1>Suppliers</h1>

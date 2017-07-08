@@ -2,6 +2,7 @@ import { graphql } from 'react-apollo';
 import QUERY from './query.graphql';
 import UPDATE_SUBSCRIPTION from './update_subscription.graphql';
 import DELETE_SUBSCRIPTION from './delete_subscription.graphql';
+import UPDATE_PROJECT_SUBSCRIPTION from './project_update_subscription.graphql';
 
 const GetClient = graphql(QUERY, {
   name: 'client',
@@ -27,9 +28,20 @@ const GetClient = graphql(QUERY, {
             }
         });
       },
-      subscribeToClientDelete: () => {
+      subscribeToClientDelete: (params) => {
         return subscribeToMore({
             document: DELETE_SUBSCRIPTION,
+            variables: { id: params },
+            updateQuery: (prev, { data }) => {
+              refetch();
+              return prev;
+            }
+        });
+      },
+      subscribeToProjectUpdate: (params) => {
+        return subscribeToMore({
+            document: UPDATE_PROJECT_SUBSCRIPTION,
+            variables: { id: params },
             updateQuery: (prev, { data }) => {
               refetch();
               return prev;

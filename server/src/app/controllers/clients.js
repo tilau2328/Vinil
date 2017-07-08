@@ -6,7 +6,7 @@ const create = function(name){
     new_client.save()
     .then((client) => resolve(client))
     .catch((error) => reject(error));
-  });
+  });º
 }
 
 const list = function(){

@@ -80,7 +80,7 @@ EditSupplierForm.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string
   }).isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool
 };
 
 export default withMutation(EditSupplierForm);

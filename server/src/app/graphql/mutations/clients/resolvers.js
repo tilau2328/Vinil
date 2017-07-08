@@ -30,7 +30,6 @@ const update = function(source, { id, name }){
 
 const remove = function(source, { id }){
   return new Promise((resolve, reject) => {
-
     clientControllers.remove(id)
     .then((client_id) => {
       projectControllers.list({ client: client_id })

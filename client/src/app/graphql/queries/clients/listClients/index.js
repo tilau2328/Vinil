@@ -2,12 +2,12 @@ import { graphql } from 'react-apollo';
 import apolloClient from '../../..';
 import QUERY from './query.graphql';
 import ADD_SUBSCRIPTION from './add_subscription.graphql';
+import UPDATE_SUBSCRIPTION from './update_subscription.graphql';
 import REMOVE_SUBSCRIPTION from './remove_subscription.graphql';
 
 const ListClients = graphql(QUERY, {
   name: 'clients',
   props: ({ ownProps, clients: { loading, ListClients, subscribeToMore, refetch } }) => {
-
     const props = {
       loading: loading || false,
       clients: ListClients || [],
@@ -15,6 +15,15 @@ const ListClients = graphql(QUERY, {
       subscribeToClientAdd: () => {
         return subscribeToMore({
             document: ADD_SUBSCRIPTION,
+            updateQuery: (prev, { data }) => {
+              refetch();
+              return prev;
+            }
+        });
+      },
+      subscribeToClientUpdate: () => {
+        return subscribeToMore({
+            document: UPDATE_SUBSCRIPTION,
             updateQuery: (prev, { data }) => {
               refetch();
               return prev;

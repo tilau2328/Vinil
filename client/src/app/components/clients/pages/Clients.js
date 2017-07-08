@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import withData from '../../../graphql/queries/clients/listClients';
 import ClientList from '../lists/ClientList';
 
-const Clients = ({ clients, loading, subscribeToClientAdd, subscribeToClientRemove }) => {
+const Clients = ({ clients, loading, subscribeToClientAdd, subscribeToClientUpdate, subscribeToClientRemove }) => {
   if (loading) return <h2>Loading</h2>;
-  subscribeToClientRemove();
   subscribeToClientAdd();
+  subscribeToClientUpdate();
+  subscribeToClientRemove();
   return (
     <div>
       <h1>Clients</h1>
@@ -20,7 +21,7 @@ Clients.propTypes = {
   clients: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired
+      name: PropTypes.string
     }).isRequired
   ).isRequired,
   loading: PropTypes.bool.isRequired

@@ -1,5 +1,6 @@
 const {
   GraphQLNonNull,
+  GraphQLList,
   GraphQLID
 } = require('graphql');
 const { withFilter } = require('graphql-subscriptions');
@@ -9,12 +10,18 @@ const MaterialUpdate = {
   name: 'MaterialUpdate',
   type: GraphQLID,
   args: {
-    id:  { type: new GraphQLNonNull(GraphQLID) }
+    id:  { type: GraphQLID },
+    supplier:  { type: GraphQLID },
+    materials:  { type: new GraphQLList(GraphQLID) }
   },
   subscribe: withFilter(
     () => pubsub.asyncIterator('MaterialUpdate'),
     (payload, variables) => {
-      return payload === variables.id;
+      return (!variables.id && !variables.supplier)
+       || payload.id === variables.id
+       || payload.supplier === variables.supplier
+       || (variables.materials
+         && variables.materials.indexOf(payload.id) != -1)
     }
   )
 };

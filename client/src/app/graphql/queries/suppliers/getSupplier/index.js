@@ -2,6 +2,7 @@ import { graphql } from 'react-apollo';
 import QUERY from './query.graphql';
 import UPDATE_SUBSCRIPTION from './update_subscription.graphql';
 import DELETE_SUBSCRIPTION from './delete_subscription.graphql';
+import UPDATE_MATERIAL_SUBSCRIPTION from './update_material_subscription.graphql';
 
 const GetSupplier = graphql(QUERY, {
   name: 'supplier',
@@ -32,6 +33,17 @@ const GetSupplier = graphql(QUERY, {
         return subscribeToMore({
             document: DELETE_SUBSCRIPTION,
             variables: { id: params },
+            updateQuery: (prev) => {
+              refetch();
+              return prev;
+            }
+        });
+      },
+      subscribeToMaterialUpdate: params => {
+        if(!params) return;
+        return subscribeToMore({
+            document: UPDATE_MATERIAL_SUBSCRIPTION,
+            variables: { supplier: params },
             updateQuery: (prev) => {
               refetch();
               return prev;

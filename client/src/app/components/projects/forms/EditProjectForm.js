@@ -19,7 +19,7 @@ class EditProjectForm extends Component {
     };
   }
 
-  handleNameChange(event){ this.setState({ name: parseInt(event.target.value), error: '' }); }
+  handleNameChange(event){ this.setState({ name: event.target.value, error: '' }); }
   nameInput(){
     return (
       <div className="row">
@@ -38,7 +38,7 @@ class EditProjectForm extends Component {
     );
   }
 
-  handleCostChange(event){ this.setState({ cost: event.target.value, error: '' }); }
+  handleCostChange(event){ this.setState({ cost: parseInt(event.target.value), error: '' }); }
   costInput(){
     return (
       <div className="row">

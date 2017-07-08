@@ -1,6 +1,7 @@
 import { graphql } from 'react-apollo';
 import QUERY from './query.graphql';
 import ADD_SUBSCRIPTION from './add_subscription.graphql';
+import UPDATE_SUBSCRIPTION from './update_subscription.graphql';
 import REMOVE_SUBSCRIPTION from './remove_subscription.graphql';
 
 const ListSuppliers = graphql(QUERY, {
@@ -13,6 +14,15 @@ const ListSuppliers = graphql(QUERY, {
       subscribeToSupplierAdd: () => {
         return subscribeToMore({
             document: ADD_SUBSCRIPTION,
+            updateQuery: (prev, { data }) => {
+              refetch();
+              return prev;
+            }
+        });
+      },
+      subscribeToSupplierUpdate: () => {
+        return subscribeToMore({
+            document: UPDATE_SUBSCRIPTION,
             updateQuery: (prev, { data }) => {
               refetch();
               return prev;

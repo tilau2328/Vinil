@@ -6,7 +6,7 @@ import ProjectList from '../../projects/lists/ProjectList';
 import DeleteClientButton from '../buttons/DeleteClientButton';
 import UpdateClientButton from '../buttons/UpdateClientButton';
 
-const Client = ({ client, loading, subscribeToClientUpdate, subscribeToClientDelete }) => {
+const Client = ({ client, loading, subscribeToClientUpdate, subscribeToClientDelete, subscribeToProjectUpdate }) => {
   if (loading) return <h2>Loading</h2>;
   const {
     name, id, projects
@@ -14,6 +14,8 @@ const Client = ({ client, loading, subscribeToClientUpdate, subscribeToClientDel
   if(!id) { return <Redirect to='/clients' />; }
   subscribeToClientUpdate(id);
   subscribeToClientDelete(id);
+  subscribeToProjectUpdate(id);
+
   return (
     <div>
       <h1>Client: { name || id }</h1>

@@ -7,8 +7,9 @@ const create = function(source, { name, cost, client, description, materials }){
     projectControllers.create(name, cost, client, description, materials)
     .then((project) => {
       if(client) {
-        clientControllers.addProject(client, project.id);
-        pubsub.publish('ClientUpdate', client);
+        clientControllers.addProject(client, project.id)
+        .then((client) => pubsub.publish('ClientUpdate', client))
+        .catch((error) => console.log(error));
       }
       pubsub.publish('NewProject', project.id);
       resolve(project);
@@ -25,18 +26,20 @@ const update = function(source, { id, name, cost, client, description, materials
       if(!project) throw 'Error: Project not found.';
       if(client != project.client.toString()){
         if(client) {
-          clientControllers.addProject(client, id);
-          pubsub.publish('ClientUpdate', client);
+          clientControllers.addProject(client, id)
+          .then((client) => pubsub.publish('ClientUpdate', client))
+          .catch((error) => console.log(error));
         }
         if(project.client) {
-          clientControllers.removeProject(project.client, id);
-          pubsub.publish('ClientUpdate', project.client);
+          clientControllers.removeProject(project.client, id)
+          .then((client) => pubsub.publish('ClientUpdate', project.client))
+          .catch((error) => console.log(error));
         }
       }
       return projectControllers.update(project, { name, cost, client, description, materials });
     })
     .then((project) => {
-      pubsub.publish('ProjectUpdate', project.id);
+      pubsub.publish('ProjectUpdate', { id: project.id, client: project.client });
       resolve(project);
     })
     .catch((error) => reject(error));
@@ -49,8 +52,9 @@ const remove = function(source, { id }){
     .then((project) => {
       if(!project) throw 'Error: Project not found.';
       if(project.client) {
-        clientControllers.removeProject(project.client, id);
-        pubsub.publish('ClientUpdate', project.client);
+        clientControllers.removeProject(project.client, id)
+        .then((client) => pubsub.publish('ClientUpdate', client.id))
+        .catch((error) => console.log(error));
       }
       return projectControllers.remove(id)
     })

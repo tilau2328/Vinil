@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import withData from '../../../graphql/queries/projects/listProjects';
 import ProjectList from '../lists/ProjectList';
 
-const Projects = ({ projects, loading, subscribeToProjectAdd, subscribeToProjectRemove }) => {
+const Projects = ({ projects, loading, subscribeToProjectAdd, subscribeToProjectUpdate, subscribeToProjectRemove }) => {
   if (loading) return <h2>Loading</h2>;
   subscribeToProjectRemove();
+  subscribeToProjectUpdate();
   subscribeToProjectAdd();
 
   return (

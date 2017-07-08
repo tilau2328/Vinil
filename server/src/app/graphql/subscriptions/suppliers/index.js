@@ -9,12 +9,13 @@ const SupplierUpdate = {
   name: 'SupplierUpdate',
   type: GraphQLID,
   args: {
-    id:  { type: new GraphQLNonNull(GraphQLID) }
+    id:  { type: GraphQLID }
   },
   subscribe: withFilter(
     () => pubsub.asyncIterator('SupplierUpdate'),
     (payload, variables) => {
-      return payload === variables.id;
+      return !variables.id
+       || payload === variables.id;
     }
   )
 };

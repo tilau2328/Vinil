@@ -8,7 +8,7 @@ import DeleteProjectButton from '../buttons/DeleteProjectButton';
 import UpdateProjectButton from '../buttons/UpdateProjectButton';
 import ClientItem from '../../clients/items/ClientItem';
 
-const Project = ({ project, loading, subscribeToProjectUpdate, subscribeToProjectDelete }) => {
+const Project = ({ project, loading, subscribeToProjectUpdate, subscribeToProjectDelete, subscribeToClientUpdate, subscribeToMaterialUpdate }) => {
   if (loading) return <h2>Loading</h2>;
   const {
     id, name, cost,
@@ -18,6 +18,9 @@ const Project = ({ project, loading, subscribeToProjectUpdate, subscribeToProjec
   if(!id) { return <Redirect to='/projects' />; }
   subscribeToProjectUpdate(id);
   subscribeToProjectDelete(id);
+  if(client) subscribeToClientUpdate(client);
+  if(materials) subscribeToMaterialUpdate(materials.map(({material}) => material));
+
   return (
     <div>
       <h1>Project: { name || id }</h1>

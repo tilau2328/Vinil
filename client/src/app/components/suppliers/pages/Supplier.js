@@ -6,12 +6,13 @@ import MaterialList from '../../materials/lists/MaterialList';
 import DeleteSupplierButton from '../buttons/DeleteSupplierButton';
 import UpdateSupplierButton from '../buttons/UpdateSupplierButton';
 
-const Supplier = ({ supplier, loading, subscribeToSupplierUpdate, subscribeToSupplierDelete }) => {
+const Supplier = ({ supplier, loading, subscribeToSupplierUpdate, subscribeToSupplierDelete, subscribeToMaterialUpdate }) => {
   if (loading) return <h2>Loading</h2>;
   const { materials, name, id } = supplier;
   if(!id) { return <Redirect to='/suppliers' />; }
   subscribeToSupplierUpdate(id);
   subscribeToSupplierDelete(id);
+  subscribeToMaterialUpdate(id);
 
   return (
     <div>

@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import withData from '../../../graphql/queries/materials/listMaterials';
 import MaterialList from '../lists/MaterialList';
 
-const Materials = ({ materials, loading, subscribeToMaterialAdd, subscribeToMaterialRemove }) => {
+const Materials = ({ materials, loading, subscribeToMaterialAdd, subscribeToMaterialUpdate, subscribeToMaterialRemove }) => {
   if (loading) return <h2>Loading</h2>;
   subscribeToMaterialRemove();
+  subscribeToMaterialUpdate();
   subscribeToMaterialAdd();
   return (
     <div>

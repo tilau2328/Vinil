@@ -9,25 +9,25 @@ const create = {
 const list = {
   method: 'GET',
   path: '/clients',
-  handler: handlers.create
+  handler: handlers.list
 }
 
 const get = {
   method: 'GET',
   path: '/clients/{client_id}',
-  handler: handlers.create
+  handler: handlers.get
 }
 
 const update = {
   method: 'PATCH',
   path: '/clients/{client_id}',
-  handler: handlers.create
+  handler: handlers.update
 }
 
 const remove = {
   method: 'DELETE',
   path: '/clients/{client_id}',
-  handler: handlers.create
+  handler: handlers.remove
 }
 
 module.exports = [

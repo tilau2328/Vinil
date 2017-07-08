@@ -9,12 +9,13 @@ const ClientUpdate = {
   name: 'ClientUpdate',
   type: GraphQLID,
   args: {
-    id:  { type: new GraphQLNonNull(GraphQLID) }
+    id:  { type: GraphQLID }
   },
   subscribe: withFilter(
     () => pubsub.asyncIterator('ClientUpdate'),
     (payload, variables) => {
-      return payload === variables.id;
+      return !variables.id
+       || payload === variables.id;
     }
   )
 };
@@ -28,7 +29,15 @@ const NewClient = {
 const ClientDelete = {
   name: 'ClientDelete',
   type: GraphQLID,
-  subscribe: () => pubsub.asyncIterator('ClientDelete')
+  args: {
+    id:  { type: GraphQLID }
+  },
+  subscribe: withFilter(
+    () => pubsub.asyncIterator('ClientDelete'),
+    (payload, variables) => {
+      return payload === variables.id || !variables.id;
+    }
+  )
 };
 
 module.exports = {

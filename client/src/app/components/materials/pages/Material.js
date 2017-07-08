@@ -7,7 +7,7 @@ import SupplierItem from '../../suppliers/items/SupplierItem';
 import DeleteMaterialButton from '../buttons/DeleteMaterialButton';
 import UpdateMaterialButton from '../buttons/UpdateMaterialButton';
 
-const Material = ({ material, loading, subscribeToMaterialUpdate, subscribeToMaterialDelete }) => {
+const Material = ({ material, loading, subscribeToMaterialUpdate, subscribeToMaterialDelete, subscribeToSupplierUpdate }) => {
   if (loading) return <h2>Loading</h2>;
   const {
     id,
@@ -21,6 +21,7 @@ const Material = ({ material, loading, subscribeToMaterialUpdate, subscribeToMat
   if(!id) { return <Redirect to='/materials' />; }
   subscribeToMaterialUpdate(id);
   subscribeToMaterialDelete(id);
+  if(supplier) subscribeToSupplierUpdate(supplier);
 
   const priceField = () => {
     if(price){
