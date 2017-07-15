@@ -31,8 +31,8 @@ class SupplierSelect extends Component {
   onChange(event){
     if(event && event.value == undefined) { return; }
     var value = event ? event.value : null;
-    this.setState({ supplier: value });
-    this.props.onChange(value);
+    this.setState({ supplier: event.value });
+    this.props.onChange(event.value);
   }
 
   render() {
@@ -43,7 +43,7 @@ class SupplierSelect extends Component {
     return (
       <Select
         id="supplierInput"
-        name = "supplier"
+        name="supplier"
         ref="supplierSelect"
         value={this.state.supplier}
         searchable={true}

@@ -41,8 +41,43 @@ const UpdateProject = {
   resolve: resolvers.update
 };
 
+const AddProjectMaterial = {
+  name: 'AddMaterial',
+  type: ProjectType,
+  args: {
+    project: { type: new GraphQLNonNull(GraphQLID) },
+    material: { type: new GraphQLNonNull(GraphQLID) },
+    quantity: { type: GraphQLInt }
+  },
+  resolve: resolvers.addMaterial
+};
+
+const UpdateProjectMaterial = {
+  name: 'UpdateProjectMaterial',
+  type: ProjectType,
+  args: {
+    project: { type: new GraphQLNonNull(GraphQLID) },
+    material: { type: new GraphQLNonNull(GraphQLID) },
+    quantity: { type: GraphQLInt }
+  },
+  resolve: resolvers.updateMaterial
+};
+
+const RemoveProjectMaterial = {
+  name: 'RemoveProjectMaterial',
+  type: ProjectType,
+  args: {
+    project: { type: new GraphQLNonNull(GraphQLID) },
+    material: { type: new GraphQLNonNull(GraphQLID) }
+  },
+  resolve: resolvers.removeMaterial
+};
+
 module.exports = {
   CreateProject,
   DeleteProject,
-  UpdateProject
+  UpdateProject,
+  AddProjectMaterial,
+  UpdateProjectMaterial,
+  RemoveProjectMaterial
 }

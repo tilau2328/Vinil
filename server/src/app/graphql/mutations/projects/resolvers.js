@@ -66,8 +66,60 @@ const remove = function(source, { id }){
   });
 }
 
+const addMaterial = function(source, { project, material, quantity }){
+  return new Promise((resolve, reject) => {
+    projectControllers.get(project)
+    .then((project) => {
+      if(!project) throw 'Error: Project not found.';
+      return projectControllers.addMaterial(project, material, quantity);
+    })
+    .then((project) => {
+      pubsub.publish('ProjectUpdate', { id: project.id });
+      resolve(project);
+    })
+    .catch((error) => {
+      console.log("Error: ", error);
+      reject(error);
+    });
+  });
+}
+
+const updateMaterial = function(source, data){
+  const { project, material, quantity } = data;
+  return new Promise((resolve, reject) => {
+    projectControllers.get(project)
+    .then((project) => {
+      if(!project) throw 'Error: Project not found.';
+      return projectControllers.updateMaterial(project, material, quantity);
+    })
+    .then((project) => {
+      pubsub.publish('ProjectUpdate', { id: project.id });
+      resolve(project);
+    })
+    .catch((error) => reject(error));
+  });
+}
+
+const removeMaterial = function(source, { project, material }){
+  return new Promise((resolve, reject) => {
+    projectControllers.get(project)
+    .then((project) => {
+      if(!project) throw 'Error: Project not found.';
+      return projectControllers.removeMaterial(project, material);
+    })
+    .then((project) => {
+      pubsub.publish('ProjectUpdate', { id: project.id });
+      resolve(project);
+    })
+    .catch((error) => reject(error));
+  });
+}
+
 module.exports = {
   create,
   update,
-  remove
+  remove,
+  addMaterial,
+  updateMaterial,
+  removeMaterial
 }

@@ -57,7 +57,7 @@ const listById = function(id_list){
     id_list.map((id) => {
       get(id.material || id)
       .then((material) => {
-        material_list.push(material);
+        material_list.push(id.material ? { material, quantity: id.quantity } : material);
         if(material_list.length == id_list.length) resolve(material_list);
       })
       .catch((error) => reject(error));

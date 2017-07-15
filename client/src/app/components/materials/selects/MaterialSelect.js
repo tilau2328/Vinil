@@ -7,17 +7,28 @@ class MaterialSelect extends Component {
   constructor(props){
     super(props);
     this.state = {
-      material: null
+      filter_list: this.props.filter_list,
+      material: null,
+      materials: [],
+      options: []
     }
   }
 
-  componentDidUpdate() {
-    const { id, materials, loading } = this.props;
-    if(!loading && !this.state.material){
+  componentWillReceiveProps(props){
+    console.log(props);
+  }
+
+  componentDidUpdate(){
+    const { filter_list, id, materials } = this.props;
+    const list = filter_list ? materials.filter(({ id }) => filter_list.indexOf(id) == -1) : materials;
+    console.log(filter_list);
+    const options = this.listToOptions(list);
+    if(!filter_list || list.length != this.state.materials.length){ this.setState({ materials: list, options }); }
+    if(!this.state.material || list.findIndex((item) => { return item.id == this.state.material; }) == -1){
       var new_material;
-      if(id){ new_material = id; }
-      else if(materials.length > 0) {
-        new_material = materials[0].id;
+      if(id && list.findIndex((item) => { return item.id == id; }) != -1){ new_material = id; }
+      else if(list.length > 0) {
+        new_material = list[0].id;
       } else { return; }
       this.setState({ material: new_material });
       this.props.onChange(new_material);
@@ -30,22 +41,22 @@ class MaterialSelect extends Component {
     });
   }
 
-  onChange({ label, value }){
+  onChange(event){
     if(event && event.value == undefined) { return; }
     var value = event ? event.value : null;
-    this.setState({ material: value });
-    this.props.onChange(value);
+    this.setState({ material: event.value });
+    this.props.onChange(event.value);
   }
 
   render() {
-    const { loading, materials, onChange, id } = this.props;
+    const { loading, onChange, id } = this.props;
+    const { materials, material, options } = this.state;
     if (loading || !materials) return <div />;
-    const options = this.listToOptions(materials);
     return (
       <Select
         name = "material"
         ref="materialSelect"
-        value={this.state.material}
+        value={material}
         searchable={true}
         isLoading={loading}
         options={options}

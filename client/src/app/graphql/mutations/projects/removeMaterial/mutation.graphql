@@ -1,0 +1,19 @@
+mutation removeProjectMaterial($project: ID!, $material: ID!) {
+  RemoveProjectMaterial(project: $project, material: $material) {
+    id
+    name
+    cost
+    client {
+      id
+      name
+    }
+    materials {
+      material {
+        id
+        name
+      }
+      quantity
+    }
+    description
+  }
+}

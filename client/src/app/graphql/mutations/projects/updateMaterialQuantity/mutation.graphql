@@ -1,0 +1,19 @@
+mutation updateProjectMaterial($project: ID!, $material: ID!, $quantity: Int) {
+  UpdateProjectMaterial(project: $project, material: $material, quantity: $quantity) {
+    id
+    name
+    cost
+    client {
+      id
+      name
+    }
+    materials {
+      material {
+        id
+        name
+      }
+      quantity
+    }
+    description
+  }
+}

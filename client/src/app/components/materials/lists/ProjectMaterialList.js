@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import ProjectMaterialItem from '../items/MaterialItem';
+import ProjectMaterialItem from '../items/ProjectMaterialItem';
 
-const ProjectMaterialList = ({ materials }) => {
+const ProjectMaterialList = ({ materials, project }) => {
   return (
     <ul>
-      { materials.map((material) => <ProjectMaterialItem key={material.id} project_material={material} /> ) }
+      { materials.map((material) => <ProjectMaterialItem key={material.material.id} project_material={material} project={project}/> ) }
     </ul>
   );
 };

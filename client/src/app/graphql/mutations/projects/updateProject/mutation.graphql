@@ -7,6 +7,13 @@ mutation updateProject($id: ID!, $name: String, $cost: Int, $client: ID, $descri
       id
       name
     }
+    materials {
+      material {
+        id
+        name
+      }
+      quantity
+    }
     description
   }
 }

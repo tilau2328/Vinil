@@ -66,6 +66,35 @@ const listById = function(id_list){
   });
 }
 
+const addMaterial = function(project, material, quantity){
+  return new Promise((resolve, reject) => {
+    project.materials.push({ material, quantity });
+    project.save()
+    .then((project) => resolve(project))
+    .catch((error) => reject(error));
+  });
+}
+
+const updateMaterial = function(project, material_id, quantity){
+  return new Promise((resolve, reject) => {
+    const material = project.materials.findIndex(({material}) => material === material_id);
+    material.quantity = quantity;
+    project.save()
+    .then((project) => resolve(project))
+    .catch((error) => reject(error));
+  });
+}
+
+const removeMaterial = function(project, material_id){
+  return new Promise((resolve, reject) => {
+    const index = project.materials.findIndex(({material}) => material === material_id);
+    project.materials.splice(index, 1);
+    project.save()
+    .then((project) => resolve(project))
+    .catch((error) => reject(error));
+  });
+}
+
 
 module.exports = {
   create,
@@ -73,5 +102,8 @@ module.exports = {
   get,
   update,
   remove,
-  listById
+  listById,
+  addMaterial,
+  updateMaterial,
+  removeMaterial
 }

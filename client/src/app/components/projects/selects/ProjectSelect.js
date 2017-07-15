@@ -30,11 +30,11 @@ class ProjectSelect extends Component {
     });
   }
 
-  onChange({ label, value }){
+  onChange(event){
     if(event && event.value == undefined) { return; }
     var value = event ? event.value : null;
-    this.setState({ project: value });
-    this.props.onChange(value);
+    this.setState({ project: event.value });
+    this.props.onChange(event.value);
   }
 
   render() {
