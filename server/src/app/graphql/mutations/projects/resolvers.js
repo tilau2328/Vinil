@@ -1,3 +1,4 @@
+const materialsControllers = require('../../../controllers/materials');
 const projectControllers = require('../../../controllers/projects');
 const clientControllers = require('../../../controllers/clients');
 const pubsub = require('../../pubsub');
@@ -68,10 +69,16 @@ const remove = function(source, { id }){
 
 const addMaterial = function(source, { project, material, quantity }){
   return new Promise((resolve, reject) => {
+    var project_aux;
     projectControllers.get(project)
     .then((project) => {
       if(!project) throw 'Error: Project not found.';
-      return projectControllers.addMaterial(project, material, quantity);
+      project_aux = project;
+      return materialsControllers.get(material);
+    })
+    .then((material) => {
+      if(!material) throw 'Error: Material not found.';
+      return projectControllers.addMaterial(project_aux, material.id, quantity);
     })
     .then((project) => {
       pubsub.publish('ProjectUpdate', { id: project.id });

@@ -1,5 +1,6 @@
 const materialsControllers = require('../../../controllers/materials');
 const supplierControllers = require('../../../controllers/suppliers');
+const projectControllers = require('../../../controllers/projects');
 const pubsub = require('../../pubsub');
 
 const create = function(source, { name, price, supplier, description, available, metric }){
@@ -55,6 +56,14 @@ const remove = function(source, { id }){
         .then((supplier) => pubsub.publish('SupplierUpdate', supplier.id))
         .catch((error) => console.log(error));
       }
+      projectControllers.list(null, material.id)
+      .then((projects) => {
+          projects.map((project) => {
+            projectControllers.removeMaterial(project, id)
+            .then((project) => pubsub.publish('ProjectUpdate', project.id))
+            .catch((error) => console.log(error));
+          });
+      }).catch((error) => console.log(error));
       return materialsControllers.remove(id);
     })
     .then((material_id) => {

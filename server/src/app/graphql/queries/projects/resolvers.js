@@ -2,7 +2,7 @@ const controllers = require('../../../controllers/projects');
 
 const list = function(){
   return new Promise((resolve, reject) => {
-    controllers.list({})
+    controllers.list()
     .then((projects) => resolve(projects))
     .catch((error) => reject(error));
   });

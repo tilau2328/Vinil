@@ -6,8 +6,18 @@ import withData from '../../../graphql/queries/materials/listMaterials';
 class MaterialSelect extends Component {
   constructor(props){
     super(props);
+    const {
+      filter_list,
+      subscribeToMaterialRemove,
+      subscribeToMaterialUpdate,
+      subscribeToMaterialAdd
+    } = props;
+
+    subscribeToMaterialRemove();
+    subscribeToMaterialUpdate();
+    subscribeToMaterialAdd();
     this.state = {
-      filter_list: this.props.filter_list,
+      filter_list,
       material: null,
       materials: [],
       options: []
@@ -24,6 +34,7 @@ class MaterialSelect extends Component {
     console.log(filter_list);
     const options = this.listToOptions(list);
     if(!filter_list || list.length != this.state.materials.length){ this.setState({ materials: list, options }); }
+    console.log(list.findIndex((item) => { return item.id == this.state.material; }));
     if(!this.state.material || list.findIndex((item) => { return item.id == this.state.material; }) == -1){
       var new_material;
       if(id && list.findIndex((item) => { return item.id == id; }) != -1){ new_material = id; }

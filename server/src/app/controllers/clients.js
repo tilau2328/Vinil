@@ -68,6 +68,7 @@ const removeProject = function(client_id, project_id){
     .then((client) => {
       if(!client) throw 'Error: Client not found.';
       const index = client.projects.findIndex((project) => project_id == project.toString());
+      console.log(index);
       client.projects.splice(index, 1);
       return client.save();
     })

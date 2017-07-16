@@ -9,8 +9,10 @@ const create = function(name, cost, client, description, materials){
   });
 }
 
-const list = function({ client }){
-  var filter = client ? { client } : null;
+const list = function(client, material){
+  var filter = {};
+  if(client) filter = { client };
+  else if(material) filter = { 'materials.material': material };
   return new Promise((resolve, reject) => {
     Project.find(filter).exec()
     .then((projects) => resolve(projects))
