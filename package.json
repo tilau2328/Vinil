@@ -1,0 +1,13 @@
+{
+  "name": "vinil",
+  "version": "1.0.0",
+  "description": "CMS for vinil instalation managment. Running on Hapi.JS server with a Mongoose DB connection, and a React Redux Client, connected by a GraphQL interface.",
+  "main": "index.js",
+  "scripts": {
+    "db": "mongodb --dbpath=./data/db",
+    "client": "cd ./client && npm start && cd ..",
+    "server": "cd ./server && npm start && cd .."
+  },
+  "author": "Tilau",
+  "license": "ISC"
+}
