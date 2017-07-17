@@ -6,6 +6,14 @@ import withData from '../../../graphql/queries/suppliers/listSuppliers';
 class SupplierSelect extends Component {
   constructor(props){
     super(props);
+    const {
+      subscribeToSupplierAdd,
+      subscribeToSupplierUpdate,
+      subscribeToSupplierRemove
+    } = props;
+    subscribeToSupplierRemove();
+    subscribeToSupplierUpdate();
+    subscribeToSupplierAdd();
     this.state = { supplier: null };
   }
 

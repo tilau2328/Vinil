@@ -6,6 +6,14 @@ import withData from '../../../graphql/queries/clients/listClients';
 class ClientSelect extends Component {
   constructor(props){
     super(props);
+    const {
+      subscribeToClientAdd,
+      subscribeToClientUpdate,
+      subscribeToClientRemove
+    } = props;
+    subscribeToClientAdd();
+    subscribeToClientUpdate();
+    subscribeToClientRemove();
     this.state = {
       client: null
     }

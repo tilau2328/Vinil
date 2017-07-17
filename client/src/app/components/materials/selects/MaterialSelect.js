@@ -24,17 +24,12 @@ class MaterialSelect extends Component {
     }
   }
 
-  componentWillReceiveProps(props){
-    console.log(props);
-  }
-
   componentDidUpdate(){
     const { filter_list, id, materials } = this.props;
     const list = filter_list ? materials.filter(({ id }) => filter_list.indexOf(id) == -1) : materials;
-    console.log(filter_list);
     const options = this.listToOptions(list);
+    
     if(!filter_list || list.length != this.state.materials.length){ this.setState({ materials: list, options }); }
-    console.log(list.findIndex((item) => { return item.id == this.state.material; }));
     if(!this.state.material || list.findIndex((item) => { return item.id == this.state.material; }) == -1){
       var new_material;
       if(id && list.findIndex((item) => { return item.id == id; }) != -1){ new_material = id; }

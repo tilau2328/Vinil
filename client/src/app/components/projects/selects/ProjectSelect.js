@@ -6,6 +6,14 @@ import withData from '../../graphql/queries/projects/listProjects';
 class ProjectSelect extends Component {
   constructor(props){
     super(props);
+    const {
+      subscribeToProjectAdd,
+      subscribeToProjectUpdate,
+      subscribeToProjectRemove
+    } = props;
+    subscribeToProjectRemove();
+    subscribeToProjectUpdate();
+    subscribeToProjectAdd();
     this.state = {
       project: null
     }
