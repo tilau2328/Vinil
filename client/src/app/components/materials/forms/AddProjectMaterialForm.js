@@ -48,6 +48,7 @@ class CreateMaterialForm extends Component {
   }
 
   render(){
+    console.log(this.state.material ? 'true' : 'false');
     return (
       <div>
         <form onSubmit={this.handleSubmit.bind(this)} className="col-sm-2">
@@ -58,7 +59,7 @@ class CreateMaterialForm extends Component {
               pattern="[0-9]*"
               id="quantityInput"
               className="form-control"
-              value={this.state.name}
+              value={this.state.quantity}
               onChange={this.handleQuantityChange.bind(this)}
             />
           </div>
@@ -70,6 +71,7 @@ class CreateMaterialForm extends Component {
           </div>
           <button
             action="submit"
+            disabled={!this.state.material}
             className="btn btn-primary"
           >Add Material</button>
           <p>{this.state.error}</p>

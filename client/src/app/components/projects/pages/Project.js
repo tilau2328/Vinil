@@ -44,7 +44,7 @@ class Project extends Component {
     subscribeToProjectDelete(id);
     if(client) subscribeToClientUpdate(client);
     if(materials) subscribeToMaterialUpdate(materials.map(({material}) => material));
-    console.log(this.state.filter_list);
+
     return (
       <div>
         <h1>Project: { name || id }</h1>

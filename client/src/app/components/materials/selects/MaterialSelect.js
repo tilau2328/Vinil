@@ -28,14 +28,17 @@ class MaterialSelect extends Component {
     const { filter_list, id, materials } = this.props;
     const list = filter_list ? materials.filter(({ id }) => filter_list.indexOf(id) == -1) : materials;
     const options = this.listToOptions(list);
-    
+
     if(!filter_list || list.length != this.state.materials.length){ this.setState({ materials: list, options }); }
-    if(!this.state.material || list.findIndex((item) => { return item.id == this.state.material; }) == -1){
+    if(!list.length) {
+      if(!this.state.material) return;
+      this.setState({ material: new_material });
+      this.props.onChange(new_material);
+    } else if(!this.state.material || list.findIndex((item) => { return item.id == this.state.material; }) == -1){
       var new_material;
       if(id && list.findIndex((item) => { return item.id == id; }) != -1){ new_material = id; }
-      else if(list.length > 0) {
-        new_material = list[0].id;
-      } else { return; }
+      else if(list.length > 0) { new_material = list[0].id; }
+      else { return; }
       this.setState({ material: new_material });
       this.props.onChange(new_material);
     }
@@ -50,8 +53,8 @@ class MaterialSelect extends Component {
   onChange(event){
     if(event && event.value == undefined) { return; }
     var value = event ? event.value : null;
-    this.setState({ material: event.value });
-    this.props.onChange(event.value);
+    this.setState({ material: value });
+    this.props.onChange(value);
   }
 
   render() {
