@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "setup-win": "if not exist \"./db\" mkdir db\\data",
-    "db": "mkdir db && cd db && mkdir data && mongod --dbpath=./data/db",
+    "db": "mongod --dbpath=./data/db",
     "client": "cd ./client && npm start && cd ..",
     "server": "cd ./server && npm start && cd .."
   },
